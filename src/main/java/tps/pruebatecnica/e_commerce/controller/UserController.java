@@ -15,6 +15,8 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -38,8 +40,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        return userService.authenticate(username, password) ? "Login exitoso" : "Credenciales incorrectas";
+    public boolean login(@RequestParam String username, @RequestParam String password) {
+        return userService.authenticate(username, password) ? true : false;
     }
 
     @GetMapping("/all")
@@ -55,6 +57,11 @@ public class UserController {
     @DeleteMapping("/delete")
     public ResponseEntity<GenericResponse<User>> deleteUserById (@RequestParam Long id){
         return userService.deleteUser(id);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<GenericResponse<User>> updateUser(@RequestParam Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
     
 }

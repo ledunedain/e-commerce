@@ -18,7 +18,7 @@ public interface IUserService {
 
     ResponseEntity<GenericResponse<User>> saveUser(User user);
 
-    ResponseEntity<User> updateUser(Long id, User user);
+    ResponseEntity<GenericResponse<User>> updateUser(Long id, User user);
 
     ResponseEntity<GenericResponse<User>> deleteUser(Long id);
 

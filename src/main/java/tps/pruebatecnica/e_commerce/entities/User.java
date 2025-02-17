@@ -50,7 +50,7 @@ public class User implements Serializable{
     private String email;
 
     @Column(name = "username", nullable = true)
-    private String usename;
+    private String username;
 
     @Column(name = "role")
     private String role;

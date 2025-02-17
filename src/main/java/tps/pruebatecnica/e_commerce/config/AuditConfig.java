@@ -18,7 +18,7 @@ public class AuditConfig {
             if (principal instanceof UserDetails) {
                 return java.util.Optional.of(((UserDetails) principal).getUsername());
             }
-            return java.util.Optional.of("SYSTEM"); // En caso de que no haya usuario autenticado
+            return java.util.Optional.of("SYSTEM");
         };
     }
 }

@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService{
         Optional<List<User>> users = Optional.of(userDao.findAll());
 
         return users
-            .map(savedUser -> ResponseEntity.ok(new GenericResponse<>("200", "all users ok", savedUser)))
+            .map(user -> ResponseEntity.ok(new GenericResponse<>("200", "all users ok", user)))
             .orElse(ResponseEntity.status(500).body(new GenericResponse<>("500", "Error getting users", null)));
     }
 
@@ -59,9 +59,19 @@ public class UserServiceImpl implements IUserService{
     
 
     @Override
-    public ResponseEntity<User> updateUser(Long id, User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+    public ResponseEntity<GenericResponse<User>> updateUser(Long id, User user) {
+        
+        Optional<User> findUser = userDao.findById(id);
+
+        if( findUser.isEmpty()){
+            return ResponseEntity.status(404).body(new GenericResponse<>("404", "user not found", null));
+        }
+
+        user.setId(findUser.get().getId());
+
+        User userUptaded = userDao.save(user);
+
+        return ResponseEntity.ok(new GenericResponse<>("200", "user updated", userUptaded));
     }
 
     @Override
@@ -74,7 +84,6 @@ public class UserServiceImpl implements IUserService{
         }
 
         findUser.get().setStatus(false);
-        findUser.get().setUpdatedAt(LocalDateTime.now());
 
         userDao.save(findUser.get());
 
@@ -83,8 +92,8 @@ public class UserServiceImpl implements IUserService{
     }
 
     public boolean authenticate(String username, String password) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'authenticate'");
+        
+        User user = userDao.findByUsername(username);
+        return user != null  && passwordEncoder.matches(password, user.getPassword());
     }
-    
 }
