@@ -11,6 +11,7 @@ import tps.pruebatecnica.e_commerce.response.GenericResponse;
 import tps.pruebatecnica.e_commerce.services.UserServiceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,9 +40,9 @@ public class UserController {
         return "hello world";
     }
 
-    @PostMapping("/login")
-    public boolean login(@RequestParam String username, @RequestParam String password) {
-        return userService.authenticate(username, password) ? true : false;
+    @GetMapping("/login")
+    public Map<String, String> login(@RequestParam String username, @RequestParam String password) {
+        return userService.authenticate(username, password);
     }
 
     @GetMapping("/all")

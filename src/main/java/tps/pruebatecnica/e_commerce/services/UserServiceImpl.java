@@ -1,7 +1,9 @@
 package tps.pruebatecnica.e_commerce.services;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,9 +93,15 @@ public class UserServiceImpl implements IUserService{
 
     }
 
-    public boolean authenticate(String username, String password) {
+    public Map<String, String> authenticate(String username, String password) {
         
-        User user = userDao.findByUsername(username);
-        return user != null  && passwordEncoder.matches(password, user.getPassword());
+        Optional<User> user = Optional.of(userDao.findByUsername(username));
+        Map<String, String> response = new HashMap<>();
+        if( user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())){
+            response.put("role", user.get().getRole());
+            return response;
+        }
+        response.put("role", "notExist");
+        return response;
     }
 }

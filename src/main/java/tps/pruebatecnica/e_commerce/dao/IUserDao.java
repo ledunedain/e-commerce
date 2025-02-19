@@ -7,4 +7,5 @@ import tps.pruebatecnica.e_commerce.entities.User;
 public interface IUserDao extends JpaRepository<User, Long>{
 
     User findByUsername(String username);
+
 }
