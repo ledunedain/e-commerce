@@ -17,16 +17,21 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tps.pruebatecnica.e_commerce.enums.ProductStatus;
 
 @Data
 @Entity
 @Table(name = "products")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     
     @Id
@@ -42,8 +47,9 @@ public class Product {
 
     private String category;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    private Inventory inventory;
+    /* @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Inventory inventory; */
 
     @ManyToMany(mappedBy = "products")
     private Set<Order> orders;
@@ -71,5 +77,6 @@ public class Product {
         if (this.status == null) {
             this.status = ProductStatus.PAUSED;
         }
+        createdAt = updatedAt =LocalDateTime.now();
     }
 }

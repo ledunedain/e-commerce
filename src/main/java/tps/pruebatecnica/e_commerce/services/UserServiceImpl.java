@@ -78,20 +78,19 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public ResponseEntity<GenericResponse<User>> deleteUser(Long id) {
-        //this is a logical delete
+       
         Optional<User> findUser = userDao.findById(id);
 
-        if( findUser.isEmpty()){
+        if (findUser.isEmpty()) {
             return ResponseEntity.status(404).body(new GenericResponse<>("404", "user not found", null));
         }
 
         findUser.get().setStatus(false);
+        User updatedUser = userDao.save(findUser.get());
 
-        userDao.save(findUser.get());
+        return ResponseEntity.ok(new GenericResponse<>("200", "user deleted", updatedUser));
+}
 
-        return ResponseEntity.ok(new GenericResponse<>("200", "user deleted", findUser.get()));
-
-    }
 
     public Map<String, String> authenticate(String username, String password) {
         

@@ -5,12 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import tps.pruebatecnica.e_commerce.dao.IProductDao;
 import tps.pruebatecnica.e_commerce.entities.Product;
 import tps.pruebatecnica.e_commerce.enums.ProductStatus;
 import tps.pruebatecnica.e_commerce.response.GenericResponse;
 
+@Service
 public class ProductServiceImpl implements IProductService{
 
     @Autowired

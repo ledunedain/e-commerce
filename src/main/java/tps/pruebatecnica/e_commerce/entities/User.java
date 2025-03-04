@@ -22,6 +22,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -34,6 +35,7 @@ import lombok.Data;
     @UniqueConstraint(columnNames = "email"),
     @UniqueConstraint(columnNames = "username")
 })
+@AllArgsConstructor
 public class User implements Serializable{
 
     @Id
@@ -59,7 +61,7 @@ public class User implements Serializable{
     private String password;
 
     @Column(name = "status", nullable = true)
-    private boolean status = true;
+    private Boolean status;
 
     @CreatedDate
     @JsonIgnore
@@ -81,7 +83,7 @@ public class User implements Serializable{
 
     @PrePersist
     @PreUpdate
-    private void encryptPassword() {
+    private void preCreateUser() {
         if ( this.password != null && !password.startsWith("$2a$")) {
             this.password = new BCryptPasswordEncoder().encode(password);
         }

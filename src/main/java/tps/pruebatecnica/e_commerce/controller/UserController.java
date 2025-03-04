@@ -35,11 +35,6 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello world";
-    }
-
     @GetMapping("/login")
     public Map<String, String> login(@RequestParam String username, @RequestParam String password) {
         return userService.authenticate(username, password);

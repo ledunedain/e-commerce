@@ -25,8 +25,8 @@ public class ProductController {
     
     private final ProductServiceImpl productService;
 
-    public ProductController( ProductServiceImpl productService){
-        this.productService = productService;
+    public ProductController(ProductServiceImpl productService){
+        this.productService = productService;       
     }
 
     @PostMapping("/register")
